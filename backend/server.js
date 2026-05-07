@@ -4,7 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRoutes = require('./src/routes/auth');
-
+const projectRoutes = require('./src/routes/projects');
 const app = express();
 
 app.use(cors());
@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-
+app.use('/api/projects', projectRoutes);
 // Test route
 app.get('/', (req, res) => {
   res.json({ message: 'TaskFlow API is running!' });
@@ -27,4 +27,6 @@ mongoose.connect(process.env.MONGO_URI)
     });
   })
   .catch(err => console.error(err));
+  
+
   
