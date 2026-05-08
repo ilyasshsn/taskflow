@@ -3,12 +3,30 @@ const router = express.Router();
 const Task = require('../models/Task');
 const auth = require('../middleware/authMiddleware');
 
-// Get all tasks for a project
+// Get all tasks for a project with filtering and search
 router.get('/projects/:id/tasks', auth, async (req, res) => {
   try {
-    const tasks = await Task.find({ project: req.params.id })
-      .populate('assignedTo', 'fullName email');
-    res.json(tasks);
+    const { status, priority, assignedTo, search, page = 1, limit = 10 } = req.query;
+    
+    let filter = { project: req.params.id };
+    
+    if (status) filter.status = status;
+    if (priority) filter.priority = priority;
+    if (assignedTo) filter.assignedTo = assignedTo;
+    if (search) filter.title = { $regex: search, $options: 'i' };
+
+    const total = await Task.countDocuments(filter);
+    const tasks = await Task.find(filter)
+      .populate('assignedTo', 'fullName email')
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+
+    res.json({
+      data: tasks,
+      total,
+      page: Number(page),
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
