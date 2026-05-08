@@ -14,6 +14,18 @@ router.get('/projects/:id/tasks', auth, async (req, res) => {
   }
 });
 
+// Get tasks assigned to logged-in user
+router.get('/my-tasks', auth, async (req, res) => {
+  try {
+    const tasks = await Task.find({ assignedTo: req.user.id })
+      .populate('project', 'title')
+      .populate('assignedTo', 'fullName email');
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Create task
 router.post('/', auth, async (req, res) => {
   try {
@@ -56,6 +68,21 @@ router.patch('/:id/status', auth, async (req, res) => {
   }
 });
 
+// Assign task to a member
+router.patch('/:id/assign', auth, async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(
+      req.params.id,
+      { assignedTo: req.body.userId },
+      { new: true }
+    ).populate('assignedTo', 'fullName email');
+    if (!task) return res.status(404).json({ message: 'Tâche non trouvée' });
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Delete task
 router.delete('/:id', auth, async (req, res) => {
   try {
@@ -68,5 +95,7 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 module.exports = router;
+
+
 
 
