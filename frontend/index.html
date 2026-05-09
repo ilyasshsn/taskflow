@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div id="login-page">
+    <h1>TaskFlow</h1>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email" required>
+      <input type="password" id="login-password" placeholder="Mot de passe" required>
+      <button type="submit">Se connecter</button>
+      <p>Pas de compte ? <a href="#" id="go-register">S'inscrire</a></p>
+    </form>
+  </div>
+
+  <!-- REGISTER PAGE -->
+  <div id="register-page" style="display:none">
+    <h1>Créer un compte</h1>
+    <form id="register-form">
+      <input type="text" id="register-name" placeholder="Nom complet" required>
+      <input type="email" id="register-email" placeholder="Email" required>
+      <input type="password" id="register-password" placeholder="Mot de passe" required>
+      <button type="submit">S'inscrire</button>
+      <p>Déjà un compte ? <a href="#" id="go-login">Se connecter</a></p>
+    </form>
+  </div>
+
+  <!-- DASHBOARD PAGE -->
+  <div id="dashboard-page" style="display:none">
+    <nav>
+      <h2>TaskFlow</h2>
+      <button id="logout-btn">Déconnexion</button>
+    </nav>
+    <div id="stats"></div>
+    <h3>Mes Projets</h3>
+    <form id="project-form">
+      <input type="text" id="project-title" placeholder="Titre du projet">
+      <button type="submit">Créer projet</button>
+    </form>
+    <div id="projects-list"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
+
