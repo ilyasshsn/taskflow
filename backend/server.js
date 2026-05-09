@@ -25,7 +25,7 @@ app.use('/api', activityRoutes);
 app.use('/api/notifications', notificationRoutes);
 // Test route
 app.get('/', (req, res) => {
-  res.json({ message: 'TaskFlow API is running!' });
+  res.json({ message: 'TaskFlow API by IlyassHasnaoui - running!' });
 });
 
 // Connect to MongoDB
