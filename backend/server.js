@@ -9,6 +9,7 @@ const taskRoutes = require('./src/routes/tasks');
 const dashboardRoutes = require('./src/routes/dashboard');
 const memberRoutes = require('./src/routes/members');
 const activityRoutes = require('./src/routes/activities');
+const notificationRoutes = require('./src/routes/notifications');
 const app = express();
 
 app.use(cors());
@@ -21,6 +22,7 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/projects', memberRoutes);
 app.use('/api', activityRoutes);
+app.use('/api/notifications', notificationRoutes);
 // Test route
 app.get('/', (req, res) => {
   res.json({ message: 'TaskFlow API is running!' });
@@ -35,6 +37,10 @@ mongoose.connect(process.env.MONGO_URI)
     });
   })
   .catch(err => console.error(err));
+
+
+
+  
   
 
 
